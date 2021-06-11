@@ -1,0 +1,86 @@
+.dark_theme {
+  background-color: #272822;
+}
+.bright_theme {
+  background-color: white;
+}
+
+.container {
+  width: 100%;
+}
+
+.inner {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inner_left {
+  display: flex;
+  flex-direction: row;
+}
+
+.inner_right {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.toolbar_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+
+  padding: 5px;
+  margin-right: 10px;
+
+  cursor: pointer;
+}
+
+.toolbar_button p {
+  padding: 0;
+  margin: 0;
+}
+
+.toolbar_button_dark {
+  color: #3d9cf5;
+  background-color: #f2f2f2;
+}
+
+.toolbar_button_bright {
+  color: #000000;
+  background-color: rgb(221, 221, 221);
+}
+
+.toggle {
+  background-color: var(--text);
+  min-width: 80px;
+  min-height: 40px;
+  margin-bottom: 1rem;
+  position: relative;
+  border: 2px solid;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color ease-out 250ms;
+}
+
+.toggle::after {
+  content: '';
+  position: absolute;
+  background-color: var(--background);
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  border-radius: 30px;
+  transition: transform ease-out 250ms;
+}
+
+/* Active (dark mode) class for animating transition on toggle button*/
+.toggle.clicked::after {
+  transform: translateX(100%);
+}

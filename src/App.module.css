@@ -1,0 +1,46 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.inner {
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+  height: 100%;
+}
+
+.inner_editor {
+  width: 35%;
+  height: 100%;
+  border-right: solid 1px gray;
+}
+
+.inner_output {
+  width: 65%;
+  height: 100%;
+}
+
+/* Mediaqueries for mobile devices */
+@media only screen and (max-width: 768px) {
+  .inner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .inner_editor {
+    width: 100%;
+    height: 30%;
+    border-bottom: solid 1px gray;
+  }
+
+  .inner_output {
+    width: 100%;
+    height: 70%;
+  }
+}
