@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 //context imports
-import ThemeContext from '../../themes/ThemeContext';
+import ThemeContext from '../../store/ThemeContext';
 //Styles
 import styles from './Output.module.css';
 

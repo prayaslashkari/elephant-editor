@@ -7,7 +7,8 @@ import Output from './components/output/Output';
 import Toolbar from './components/toolbar/Toolbar';
 
 import styles from './App.module.css';
-import ThemeContext, { themes } from './themes/ThemeContext';
+import ThemeContext, { themes } from './store/ThemeContext';
+import AppContext, { appInitialState } from './store/AppContext';
 
 import {
   defaultCSS,
@@ -20,13 +21,12 @@ function App() {
   const [cssCode, setCSSCode] = useState(defaultCSS);
   const [jsCode, setJSCode] = useState('');
   const [outputCode, setOutputCode] = useState('');
-
-  const [editorStyle, setEditorStyle] = useState('codepen'); //codepen/letstry
+  const [editorStyle, setEditorStyle] = useState('codepen'); //codepen/w3schools
 
   let handleToggleEditorStyle = () => {
     if (editorStyle === 'codepen') {
       setHtmlCode(defaultW3HTML);
-      setEditorStyle('letstry');
+      setEditorStyle('w3schools');
       handleDefaultRun();
     } else {
       setHtmlCode(defaultHTML);
@@ -59,8 +59,9 @@ function App() {
     }
   };
 
-  //app theme
+  //Theme Context, App Context
   const [theme, setTheme] = useState(themes.light); //default light
+  const [appConfig, setAppConfig] = useState(appInitialState);
 
   //handle theme toggle
   let toggleTheme = () => {
@@ -68,38 +69,63 @@ function App() {
     else setTheme(themes.light);
   };
 
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className={styles.container}>
-        <Toolbar
-          handleRun={handleRun}
-          handleEditorStyle={handleToggleEditorStyle}
-          outputCode={outputCode}
-        />
-        <div className={styles.inner}>
-          <div className={styles.inner_editor}>
-            {editorStyle === 'codepen' ? (
-              <Editor
-                onHTML={setHtmlCode}
-                onCSS={setCSSCode}
-                onJS={setJSCode}
-              />
-            ) : (
-              <Editor2 onHTML={setHtmlCode} />
-            )}
-          </div>
+  //handle app settings
+  let handleFontChange = (size) => {
+    setAppConfig({ ...appConfig, fontSize: size });
+  };
+  let handleLightTheme = (lightTheme) => {
+    setAppConfig({ ...appConfig, lightTheme: lightTheme });
+  };
+  let handleDarkTheme = (darkTheme) => {
+    setAppConfig({ ...appConfig, darkTheme: darkTheme });
+  };
 
-          <div className={styles.inner_output}>
-            <Output
-              outputCode={outputCode}
-              htmlCode={htmlCode}
-              cssCode={cssCode}
-              jsCode={jsCode}
-            />
+  let handleEditorType = (editorType) => {
+    setAppConfig({ ...appConfig, codeEditor: editorType });
+  };
+
+  return (
+    <AppContext.Provider
+      value={{
+        appConfig,
+        handleFontChange,
+        handleLightTheme,
+        handleDarkTheme,
+        handleEditorType,
+      }}
+    >
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <div className={styles.container}>
+          <Toolbar
+            handleRun={handleRun}
+            handleEditorStyle={handleToggleEditorStyle}
+            outputCode={outputCode}
+          />
+          <div className={styles.inner}>
+            <div className={styles.inner_editor}>
+              {editorStyle === 'codepen' ? (
+                <Editor
+                  onHTML={setHtmlCode}
+                  onCSS={setCSSCode}
+                  onJS={setJSCode}
+                />
+              ) : (
+                <Editor2 onHTML={setHtmlCode} />
+              )}
+            </div>
+
+            <div className={styles.inner_output}>
+              <Output
+                outputCode={outputCode}
+                htmlCode={htmlCode}
+                cssCode={cssCode}
+                jsCode={jsCode}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </ThemeContext.Provider>
+      </ThemeContext.Provider>
+    </AppContext.Provider>
   );
 }
 

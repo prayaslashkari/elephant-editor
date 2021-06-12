@@ -12,6 +12,7 @@ body {
 
   margin: 0;
   font-family: 'Poppins', sans-serif;
+  font-size: 12px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
